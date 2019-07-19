@@ -1,0 +1,149 @@
+前情回顾
+
+1. git的使用
+
+   * 什么是git
+   * 基本命令
+         git config
+         git add
+         git commit
+         git tag
+         git reset
+         git stash
+         git branch
+
+   * github使用
+         git remote
+         git clone
+         git push
+         git pull/fetch
+
+
+ 2. 软件项目开发流程
+
+ * 需求分析    （需求分析文档）
+ * 概要设计    （概要设计文档）
+ * 项目计划    （甘特图，思维导图）
+ * 详细设计/编码测试 （详细设计文档）
+ * 测试/修改完善  （测试文档）
+ * 上线，发布   （说明文档）
+ * 后期维护/产品升级
+
+******************************************
+
+在线词典
+
+1. 确定好技术方案 （套接字，并发，细节确定）
+
+   * tcp 套接字
+   * 多进程
+   * 历史记录 ： 前10条
+   * 注册成功 直接登录
+
+2. 数据表进行建立 （dict： words）
+
+   * 用户  user -> id  name  passwd
+
+   create table user (id int primary key auto_increment,name varchar(32) not null,passwd varchar(128) not null);
+
+
+   * 历史记录 hist-> id name  word  time
+
+   create table hist (id int primary key auto_increment,name varchar(32) not null, word varchar(28) not null,time datetime default now() );
+
+
+3. 结构设计 ： 几个模块 封装设计
+
+   客户端
+
+   服务端： 逻辑请求处理  ，  数据库操作处理
+
+   函数封装： 直接写一个功能程序提供给使用者使用。使用者直接运行，而不是需要使用我的代码的某一部分。
+
+
+4. 功能分析 和 通信搭建
+
+   并发通信
+   登录
+   注册
+   查单词
+   历史记录
+
+
+5. 罗列功能逻辑 （每个功能确定服务端和客户端该做什么，
+编写代码测试）
+
+    注册  客户端： 输入注册信息
+                 发送请求
+                 得到反馈
+
+         服务端 : 接收请求
+                 判断是否允许注册
+                 允许注册将信息存入数据库
+                 给客户端反馈结果
+
+    登录  客户端： 输入用户名密码
+                 发送请求给服务器
+                 得到服务器反馈
+
+          服务端： 接收请求
+                  判断是否允许登录
+                  发送结果
+
+    查单词 客户端： 输入单词
+                  发送请求 Q name word
+                  等待接收结果
+
+          服务端： 接收请求
+                  查找单词
+                  发送结果
+                  插入历史记录
+
+
+    历史记录
+
+
+6. 设定客户端服务端协议
+
+   注册   R
+
+   登录   L
+
+   查单词  Q
+
+   历史记录  H
+
+   退出  E
+
+
+
+
+
+cookie:
+   import getpass
+
+   getpass.getpass()
+   功能： 隐藏输入内容
+
+cookie
+
+   import hashlib
+
+   生产加密对象
+   hash = hashlib.md5()
+
+   对密码进行加密 (passwd是你要加密的密码)
+   hash.update(passwd.encode())
+
+   加密后的密码 (返回加密后的字串)
+   pwd = hash.hexdigest()
+
+
+作业 ： 1. 完成历史记录 （查看最近10条记录）
+          如果没有历史记录则打印没有历史记录
+
+       2. HTTP协议，httpserver v2.0 
+
+
+
+
