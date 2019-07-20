@@ -17,6 +17,7 @@ ADDR = (HOST,PORT)
 # 建立数据库对象
 db = Database(database='dict')
 
+
 # 服务端注册处理
 def do_register(c,data):
     tmp = data.split(' ')
@@ -27,6 +28,7 @@ def do_register(c,data):
         c.send(b'OK')
     else:
         c.send(b'Fail')
+
 
 # 登录
 def do_login(c,data):
@@ -54,6 +56,7 @@ def do_query(c,data):
     else:
         msg = "%s : %s" % (word,mean)
         c.send(msg.encode())
+
 
 # 历史记录
 def do_query_hist(c):
@@ -88,7 +91,6 @@ def request(c):
             do_query_hist(c)
 
 
-
 # 创建服务端并发网络
 def main():
     # 创建套接字
@@ -118,7 +120,6 @@ def main():
         p = Process(target=request,args=(c,))
         p.daemon = True
         p.start()
-
 
 
 main()  # 启动程序

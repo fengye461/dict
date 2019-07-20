@@ -16,6 +16,7 @@ ADDR = ('127.0.0.1',8000)
 s = socket()
 s.connect(ADDR)
 
+
 # 查单词
 def do_query(name):
     while True:
@@ -28,11 +29,13 @@ def do_query(name):
         data = s.recv(2048).decode()
         print(data)
 
+
 # 历史记录
 def do_query_hist():
     s.send(b'H')
     data = s.recv(1024)
     print(data.decode())
+
 
 # 二级界面,登录后的状态
 def login(name):
@@ -51,6 +54,7 @@ def login(name):
             return
         else:
             print("请输入正确选项")
+
 
 # 注册函数
 def do_register():
@@ -75,6 +79,7 @@ def do_register():
         else:
             print("注册失败")
         return
+
 
 # 登录
 def do_login():
@@ -110,5 +115,6 @@ def main():
             sys.exit("谢谢使用")
         else:
             print("请输入正确选项")
+
 
 main() # 启动客户端
