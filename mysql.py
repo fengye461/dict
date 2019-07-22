@@ -96,10 +96,10 @@ class Database:
         if r:
             return r[0]
 
-    # 历史记录
-    def query_hist(self):
-        sql = "select * from hist order by time desc limit 10"
+    # 历史记录查询
+    def history(self, name):
+        sql = "select name,word,time from hist \
+        where name='%s' order by time desc \
+        limit 10" % name
         self.cur.execute(sql)
-        r = self.cur.fetchall()
-        if r:
-            return r
+        return self.cur.fetchall()

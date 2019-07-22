@@ -31,10 +31,19 @@ def do_query(name):
 
 
 # 历史记录
-def do_query_hist():
-    s.send(b'H')
-    data = s.recv(1024)
-    print(data.decode())
+def do_hist(name):
+    msg = "H " + name
+    s.send(msg.encode())
+    data = s.recv(128).decode()
+    if data == 'OK':
+        # 当不确定什么时候退出循环时,可以用死循环,满足一定条件再退出
+        while True:
+            data = s.recv(1024).decode()
+            if data == '##':
+                break
+            print(data)
+    else:
+        print("您还没有查询记录")
 
 
 # 二级界面,登录后的状态
@@ -49,7 +58,7 @@ def login(name):
         if cmd == "1":
             do_query(name)
         elif cmd == "2":
-            do_query_hist()
+            do_hist(name)
         elif cmd == "3":
             return
         else:

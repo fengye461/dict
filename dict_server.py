@@ -7,7 +7,7 @@ from socket import *
 from multiprocessing import Process
 import signal,sys
 from dict.mysql import *
-import re
+from time import sleep
 
 # 全局变量
 HOST = '0.0.0.0'
@@ -59,14 +59,22 @@ def do_query(c,data):
 
 
 # 历史记录
-def do_query_hist(c):
-    # 没有历史记录,返回None,有则返回结果
-    hist = db.query_hist()
-    if not hist:
-        c.send("没有历史记录".encode())
-    else:
-        result = re.sub(r'\),',r'\n',str(hist))
-        c.send(result.encode())
+def do_hist(c,data):
+    name = data.split(' ')[1]
+    r = db.history(name)  # 数据库处理
+    # 没有数据,db会返回空元组
+    if not r:
+        c.send(b'Fail')
+        return
+    c.send(b'OK')
+
+    for i in r:
+        # i --> (name, word,time)
+        msg = "%s  %-16s  %s" % i
+        sleep(0.1)
+        c.send(msg.encode())
+    sleep(0.1)
+    c.send(b'##')  # 发送结束
 
 
 # 具体处理客户端请求
@@ -88,7 +96,7 @@ def request(c):
         elif data[0] == 'Q':
             do_query(c,data)
         elif data[0] == 'H':
-            do_query_hist(c)
+            do_hist(c,data)
 
 
 # 创建服务端并发网络
